@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/lin_lay_list">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@drawable/garis"
+        android:layout_marginBottom="20dp"
+        android:padding="20dp">
+
+    <ImageView
+        android:id="@+id/img_list"
+        android:layout_width="100dp"
+        android:layout_height="120dp"
+        android:scaleType="fitXY"
+        android:src="@drawable/mi8lite"
+        android:layout_marginLeft="100dp"/>
+
+    <TextView
+        android:id="@+id/tv_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="HP"
+        android:textSize="30sp"
+        android:textColor="@color/colorPrimaryDark"
+        android:textAlignment="center"/>
+
+    <TextView
+        android:id="@+id/tv2_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:textColor="@color/colorPrimary"
+        android:text="yah HP lah"
+        />
+
+</LinearLayout>
+</LinearLayout>
