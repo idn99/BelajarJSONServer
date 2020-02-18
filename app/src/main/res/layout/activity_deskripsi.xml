@@ -9,11 +9,11 @@
 
     <ImageView
         android:id="@+id/img_des"
-        android:layout_width="150dp"
+        android:layout_width="240dp"
         android:layout_height="180dp"
         android:src="@drawable/mi8lite"
         android:layout_marginTop="30dp"
-        android:layout_marginLeft="125dp"/>
+        android:layout_marginLeft="75dp"/>
 
     <TextView
         android:id="@+id/tv_des_id"
@@ -21,7 +21,7 @@
         android:layout_height="wrap_content"
         android:text="text"
         android:layout_marginLeft="30dp"
-        android:textSize="20dp"/>
+        android:textSize="20sp"/>
 
     <TextView
         android:id="@+id/tv_des_nama"
@@ -29,7 +29,7 @@
         android:layout_height="wrap_content"
         android:text="text"
         android:layout_marginLeft="30dp"
-        android:textSize="20dp"/>
+        android:textSize="20sp"/>
 
     <TextView
         android:id="@+id/tv_des_slug"
@@ -37,7 +37,7 @@
         android:layout_height="wrap_content"
         android:text="text"
         android:layout_marginLeft="30dp"
-        android:textSize="20dp"
+        android:textSize="20sp"
         />
 
     <TextView
@@ -46,7 +46,7 @@
         android:layout_height="wrap_content"
         android:text="text"
         android:layout_marginLeft="30dp"
-        android:textSize="20dp"/>
+        android:textSize="20sp"/>
 
     <TextView
         android:layout_width="match_parent"
@@ -54,7 +54,7 @@
         android:textAlignment="center"
         android:text="Merchant"
         android:background="@drawable/garis"
-        android:textSize="25dp"
+        android:textSize="20sp"
         android:layout_marginTop="20dp"
         android:padding="5dp"/>
 
@@ -64,7 +64,7 @@
         android:layout_height="wrap_content"
         android:text="text"
         android:layout_marginLeft="30dp"
-        android:textSize="20dp"/>
+        android:textSize="20sp"/>
 
     <TextView
         android:id="@+id/tv_des_mname"
@@ -72,7 +72,7 @@
         android:layout_height="wrap_content"
         android:text="text"
         android:layout_marginLeft="30dp"
-        android:textSize="20dp"/>
+        android:textSize="20sp"/>
 
     <TextView
         android:id="@+id/tv_des_mslug"
@@ -80,7 +80,7 @@
         android:layout_height="wrap_content"
         android:text="text"
         android:layout_marginLeft="30dp"
-        android:textSize="20dp"/>
+        android:textSize="20sp"/>
 
     <TextView
         android:layout_width="match_parent"
@@ -88,7 +88,7 @@
         android:textAlignment="center"
         android:text="Kategori"
         android:background="@drawable/garis"
-        android:textSize="25dp"
+        android:textSize="20sp"
         android:layout_marginTop="20dp"
         android:padding="5dp"/>
 
@@ -98,7 +98,7 @@
         android:layout_height="wrap_content"
         android:text="text"
         android:layout_marginLeft="30dp"
-        android:textSize="20dp"/>
+        android:textSize="20sp"/>
 
     <TextView
         android:id="@+id/tv_des_cname"
@@ -106,6 +106,6 @@
         android:layout_height="wrap_content"
         android:text="text"
         android:layout_marginLeft="30dp"
-        android:textSize="20dp"/>
+        android:textSize="20sp"/>
 
 </LinearLayout>

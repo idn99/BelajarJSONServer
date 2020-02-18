@@ -1,5 +1,6 @@
 package com.idn99.project.belajarjsonserver;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
 
@@ -18,10 +19,13 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.lang.ref.WeakReference;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 
-public class AsyncTaskData extends AsyncTask<InputStream,Void,ArrayList<Product>> {
-
+public class AsyncTaskData extends AsyncTask<String,Void,ArrayList<Product>> {
+    ProgressDialog pd;
     WeakReference<AdapterRv> adapterRv;
     Context context;
 
@@ -31,17 +35,25 @@ public class AsyncTaskData extends AsyncTask<InputStream,Void,ArrayList<Product>
     }
 
     @Override
-    protected ArrayList<Product> doInBackground(InputStream... inputStreams) {
+    protected void onPreExecute() {
+        pd = new ProgressDialog(context);
+        pd.show();
+    }
+
+    @Override
+    protected ArrayList<Product> doInBackground(String... url) {
 
         ArrayList<Product> products = null;
-        String json = loadJsonDataFromRaw(inputStreams[0]);
+        String json = loadJsonFromApi(url[0]);
         products = deserialisasiJSON(json);
 
         return products;
     }
 
+
     @Override
     protected void onPostExecute(ArrayList<Product> products) {
+        pd.dismiss();
         AdapterRv adapternya = adapterRv.get();
         adapternya.addData(products);
         adapternya.notifyDataSetChanged();
@@ -88,24 +100,20 @@ public class AsyncTaskData extends AsyncTask<InputStream,Void,ArrayList<Product>
 
                 // merchant
 
-                ArrayList<Merchant> merchants = new ArrayList<>();
                 JSONObject jsonMerchant = jsonObject.getJSONObject("merchant");
                 int mId = jsonMerchant.getInt("merchantId");
                 String mName = jsonMerchant.getString("merchantName");
                 String mSlug = jsonMerchant.getString("merchantSlug");
 
                 Merchant merchant = new Merchant(mId,mName,mSlug);
-                merchants.add(merchant);
 
                 // category
 
-                ArrayList<ProductCategory> productCategories = new ArrayList<>();
                 JSONObject jsonCategory = jsonObject.getJSONObject("category");
                 int cId = jsonCategory.getInt("categoryId");
                 String cName = jsonCategory.getString("categoryName");
 
                 ProductCategory productCategory = new ProductCategory(cId,cName);
-                productCategories.add(productCategory);
 
                 Product product = new Product(pId,pName,pSlug,pQty,pImage,merchant,productCategory);
                 data.add(product);
@@ -117,5 +125,45 @@ public class AsyncTaskData extends AsyncTask<InputStream,Void,ArrayList<Product>
         }
 
         return data;
+    }
+
+    private String loadJsonFromApi(String urlParam){
+        String json = null;
+
+        //network calls
+        try {
+            HttpURLConnection connection = null;
+            URL url = new URL(urlParam);
+            try {
+                connection = (HttpURLConnection) url.openConnection();
+                connection.connect();
+
+                InputStream is = connection.getInputStream();
+                InputStreamReader isr = new InputStreamReader(is);
+
+                BufferedReader reader = new BufferedReader(isr);
+
+                StringBuffer sb = new StringBuffer();
+                String eachLine;
+                while ((eachLine = reader.readLine()) != null){
+                    sb.append(eachLine);
+                }
+
+                json = sb.toString();
+
+            }catch (Exception ex){
+                ex.printStackTrace();
+            }finally {
+                if (connection != null){
+                    connection.disconnect();
+                }
+            }
+        }catch (MalformedURLException ex){
+            ex.printStackTrace();
+            return ex.getMessage();
+        }
+
+
+        return json;
     }
 }

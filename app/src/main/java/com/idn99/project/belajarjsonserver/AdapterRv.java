@@ -46,7 +46,10 @@ public class AdapterRv extends RecyclerView.Adapter<AdapterRv.MyViewHolder> {
 //        holder.img.setImageResource(products.get(position).getProductImage());
         holder.tvMerchant.setText(products.get(position).getMerchants().getMerchantName());
 
-        Glide.with(context).load(products.get(position).getProductImage()).into(holder.img);
+        String baseUrl = "http://192.168.6.221:81/storage/";
+        String url = baseUrl+products.get(position).getProductImage();
+
+        Glide.with(context).load(url).into(holder.img);
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override

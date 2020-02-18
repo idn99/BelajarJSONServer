@@ -35,7 +35,8 @@ public class MainActivity extends AppCompatActivity {
 
     public void getData(){
         InputStream jsonFile = getResources().openRawResource(R.raw.data);
-        AsyncTaskData asyncTaskData = new AsyncTaskData(getApplicationContext(),adapterRv);
-        asyncTaskData.execute(jsonFile);
+        String url = "http://192.168.6.221:81/api/products";
+        AsyncTaskData asyncTaskData = new AsyncTaskData(MainActivity.this,adapterRv);
+        asyncTaskData.execute(url);
     }
 }

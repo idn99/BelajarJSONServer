@@ -22,7 +22,12 @@ public class Deskripsi extends AppCompatActivity {
         Product product = getIntent().getParcelableExtra("data");
         inisialisasi();
 
-        Glide.with(this).load(product.getProductImage()).into(img);
+        String baseUrl = "http://192.168.6.221:81/storage/";
+        String url = baseUrl+product.getProductImage();
+
+        Glide.with(this).load(url).into(img);
+
+//        Glide.with(this).load(product.getProductImage()).into(img);
         tv1.setText("ID Produk      :  "+String.valueOf(product.getProductId()));
         tv2.setText("Nama Produk    :  "+product.getProductNama());
         tv3.setText("Slug Produk    :  "+product.getProductSlug());
