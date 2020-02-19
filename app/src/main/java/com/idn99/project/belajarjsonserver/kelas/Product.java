@@ -3,15 +3,26 @@ package com.idn99.project.belajarjsonserver.kelas;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.ArrayList;
 
 public class Product implements Parcelable {
     private int productId;
+
+    @SerializedName("productName")
     private String productNama;
+
     private String productSlug;
+
     private int productQty;
+
     private String productImage;
+
+    @SerializedName("merchant")
     private Merchant merchants;
+
+    @SerializedName("category")
     private ProductCategory productCategories;
 
     public Product(int productId, String productNama, String productSlug, int productQty, String productImage, Merchant merchants, ProductCategory productCategories) {

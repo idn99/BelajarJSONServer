@@ -13,6 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.google.gson.Gson;
 import com.idn99.project.belajarjsonserver.kelas.Product;
 
 import java.util.ArrayList;
@@ -55,7 +56,11 @@ public class AdapterRv extends RecyclerView.Adapter<AdapterRv.MyViewHolder> {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, Deskripsi.class);
-                intent.putExtra("data", products.get(position));
+//                intent.putExtra("data", products.get(position));
+
+                String json = AsyncTaskData.json;
+                intent.putExtra("data", json);
+                intent.putExtra("posisi",position);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 context.startActivity(intent);
             }

@@ -6,6 +6,8 @@ import android.os.AsyncTask;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.gson.Gson;
+import com.idn99.project.belajarjsonserver.kelas.ListProducts;
 import com.idn99.project.belajarjsonserver.kelas.Merchant;
 import com.idn99.project.belajarjsonserver.kelas.Product;
 import com.idn99.project.belajarjsonserver.kelas.ProductCategory;
@@ -28,6 +30,7 @@ public class AsyncTaskData extends AsyncTask<String,Void,ArrayList<Product>> {
     ProgressDialog pd;
     WeakReference<AdapterRv> adapterRv;
     Context context;
+    public static String json;
 
     public AsyncTaskData(Context context, AdapterRv adapterRv){
         this.context = context;
@@ -44,7 +47,7 @@ public class AsyncTaskData extends AsyncTask<String,Void,ArrayList<Product>> {
     protected ArrayList<Product> doInBackground(String... url) {
 
         ArrayList<Product> products = null;
-        String json = loadJsonFromApi(url[0]);
+        json = loadJsonFromApi(url[0]);
         products = deserialisasiJSON(json);
 
         return products;
@@ -85,40 +88,11 @@ public class AsyncTaskData extends AsyncTask<String,Void,ArrayList<Product>> {
         ArrayList<Product> data = new ArrayList<>();
         try {
             JSONObject jsonAwal = new JSONObject(jsonParam);
-            JSONArray jsonData = jsonAwal.getJSONArray("data");
+//            JSONArray jsonData = jsonAwal.getJSONArray("data");
 
-            for (int i=0; i < jsonData.length(); i++) {
-                JSONObject jsonObject = jsonData.getJSONObject(i);
-
-                int pId = jsonObject.getInt("productId");
-                String pName = jsonObject.getString("productName");
-                String pSlug = jsonObject.getString("productSlug");
-                int pQty = jsonObject.getInt("productQty");
-                String pImage = jsonObject.getString("productImage");
-
-//                final int img = context.getResources().getIdentifier(pImage, "drawable", context.getPackageName());
-
-                // merchant
-
-                JSONObject jsonMerchant = jsonObject.getJSONObject("merchant");
-                int mId = jsonMerchant.getInt("merchantId");
-                String mName = jsonMerchant.getString("merchantName");
-                String mSlug = jsonMerchant.getString("merchantSlug");
-
-                Merchant merchant = new Merchant(mId,mName,mSlug);
-
-                // category
-
-                JSONObject jsonCategory = jsonObject.getJSONObject("category");
-                int cId = jsonCategory.getInt("categoryId");
-                String cName = jsonCategory.getString("categoryName");
-
-                ProductCategory productCategory = new ProductCategory(cId,cName);
-
-                Product product = new Product(pId,pName,pSlug,pQty,pImage,merchant,productCategory);
-                data.add(product);
-
-            }
+            Gson gson = new Gson();
+            ListProducts listProducts = gson.fromJson(jsonAwal.toString(), ListProducts.class);
+            data.addAll(listProducts.getProducts());
 
         } catch (JSONException e) {
             e.printStackTrace();

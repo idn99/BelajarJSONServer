@@ -3,9 +3,13 @@ package com.idn99.project.belajarjsonserver.kelas;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.google.gson.annotations.SerializedName;
+
 public class Merchant implements Parcelable {
     private int merchantId;
     private String merchantName;
+
+    @SerializedName("merchantSlug")
     private String merchantSLug;
 
     public Merchant(int merchantId, String merchantName, String merchantSLug) {
