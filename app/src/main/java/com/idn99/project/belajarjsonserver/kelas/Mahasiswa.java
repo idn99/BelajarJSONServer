@@ -1,9 +1,22 @@
 package com.idn99.project.belajarjsonserver.kelas;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
 public class Mahasiswa {
+
+    @SerializedName("nama_depan")
+    @Expose
     private String namaDepan;
+
+    @SerializedName("nama_belakang")
+    @Expose(serialize = false)
     private String namaBelakang;
+
+    @Expose
     private int umur;
+
+    @Expose
     private String jurusan;
 
     public Mahasiswa(String namaDepan, String namaBelakang, int umur, String jurusan) {

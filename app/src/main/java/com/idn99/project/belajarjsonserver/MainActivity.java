@@ -6,37 +6,76 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 import android.widget.LinearLayout;
+import android.widget.Toast;
+
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
+import com.google.gson.Gson;
+import com.google.gson.JsonSyntaxException;
+import com.idn99.project.belajarjsonserver.kelas.ListProducts;
+import com.idn99.project.belajarjsonserver.kelas.Product;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.InputStream;
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
     RecyclerView recyclerView;
-    AdapterRv adapterRv = new AdapterRv(this);
+    final AdapterRv adapterRv = new AdapterRv(this);
+    private RequestQueue requestQueue;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         inisialKomponen();
-        generateAdapter();
-        getData();
+        VolleyLoad();
     }
 
     public void inisialKomponen(){
         recyclerView = findViewById(R.id.home_rv);
     }
 
-    public void generateAdapter(){
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
-        recyclerView.setLayoutManager(layoutManager);
-        recyclerView.setAdapter(adapterRv);
-    }
-
-    public void getData(){
-        InputStream jsonFile = getResources().openRawResource(R.raw.data);
+    public void VolleyLoad(){
+        requestQueue = Volley.newRequestQueue(this);
         String url = "http://192.168.6.221:81/api/products";
-        AsyncTaskData asyncTaskData = new AsyncTaskData(MainActivity.this,adapterRv);
-        asyncTaskData.execute(url);
+        JsonObjectRequest req = new JsonObjectRequest(Request.Method.GET, url, null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+
+                        try {
+                            ArrayList<Product> data = new ArrayList<>();
+                            JSONArray jsonArray = response.getJSONArray("data");
+                            Gson gson = new Gson();
+                            ListProducts listProducts = gson.fromJson(response.toString(), ListProducts.class);
+                            data.addAll(listProducts.getProducts());
+
+                            RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(MainActivity.this);
+                            recyclerView.setLayoutManager(layoutManager);
+                            recyclerView.setAdapter(adapterRv);
+                            adapterRv.addData(data);
+
+                            Toast.makeText(MainActivity.this, String.valueOf(adapterRv.getItemCount()), Toast.LENGTH_SHORT).show();
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(MainActivity.this, "Volley Error", Toast.LENGTH_SHORT).show();
+                    }
+                });
+        requestQueue.add(req);
     }
 }

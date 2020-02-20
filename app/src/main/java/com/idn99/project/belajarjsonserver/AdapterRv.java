@@ -58,9 +58,8 @@ public class AdapterRv extends RecyclerView.Adapter<AdapterRv.MyViewHolder> {
                 Intent intent = new Intent(context, Deskripsi.class);
 //                intent.putExtra("data", products.get(position));
 
-                String json = AsyncTaskData.json;
+                String json = new Gson().toJson(products.get(position));
                 intent.putExtra("data", json);
-                intent.putExtra("posisi",position);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 context.startActivity(intent);
             }
