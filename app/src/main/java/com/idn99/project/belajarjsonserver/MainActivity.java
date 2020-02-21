@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void VolleyLoad(){
         requestQueue = Volley.newRequestQueue(this);
-        String url = "http://192.168.6.221:81/api/products";
+        String url = "http://210.210.154.65:212/api/products";
         JsonObjectRequest req = new JsonObjectRequest(Request.Method.GET, url, null,
                 new Response.Listener<JSONObject>() {
                     @Override
@@ -54,7 +54,6 @@ public class MainActivity extends AppCompatActivity {
 
                         try {
                             ArrayList<Product> data = new ArrayList<>();
-                            JSONArray jsonArray = response.getJSONArray("data");
                             Gson gson = new Gson();
                             ListProducts listProducts = gson.fromJson(response.toString(), ListProducts.class);
                             data.addAll(listProducts.getProducts());

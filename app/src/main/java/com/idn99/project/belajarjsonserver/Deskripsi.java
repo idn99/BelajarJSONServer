@@ -43,7 +43,7 @@ public class Deskripsi extends AppCompatActivity {
         Product product = new Gson().fromJson(json,Product.class);
 
         inisialisasi();
-        String baseUrl = "http://192.168.6.221:81/storage/";
+        String baseUrl = "http://210.210.154.65:212/storage/";
         String url = baseUrl + product.getProductImage();
 
         Glide.with(this).load(url).into(img);
